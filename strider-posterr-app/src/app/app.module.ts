@@ -4,16 +4,24 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material.module';
 import { MasterPageComponent } from './pages/master-page/components/master-page/master-page.component';
+import { HomePageComponent } from './pages/home-page/components/home-page/home-page.component';
+import { AppRoutingModule } from './app-routing.module';
+import { UserProfileComponent } from './pages/user-profile-page/components/user-profile/user-profile.component';
+import { UserProfileModalComponent } from './pages/user-profile-page/components/user-profile-modal/user-profile-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MasterPageComponent
+    MasterPageComponent,
+    HomePageComponent,
+    UserProfileComponent,
+    UserProfileModalComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
