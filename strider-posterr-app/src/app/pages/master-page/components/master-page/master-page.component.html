@@ -1,0 +1,20 @@
+<mat-toolbar class="mat-elevation-z6" color="primary">
+    <button (click)="menuOpened = !menuOpened" mat-icon-button>
+        <mat-icon> {{ menuOpened ? 'chevron_left' : 'menu' }} </mat-icon>
+      </button>
+    <span class="p-l-8">POSTERR</span>
+    <div class="w-100 horizontal-end username-fs">{{ username }}</div>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-height">
+    <mat-sidenav class="p-t-16 p-l-16 sidenav-color h-100 w-20" mode="side" [opened]="menuOpened">
+        <div>
+            Account info
+        </div>
+        <div class="p-t-16 vertical-center">
+            <mat-icon class="p-r-8"> account_circle </mat-icon>
+            {{ username }}
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content></mat-sidenav-content>
+</mat-sidenav-container>

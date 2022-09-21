@@ -1,0 +1,48 @@
+@import "src/styles.scss";
+
+.mat-toolbar {
+    position: relative;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.toolbar-shadow {
+    position: relative;
+}
+
+.mat-toolbar {
+    z-index: 2 !important;
+}
+
+.sidenav-height {
+    height: calc(100% - 64px);
+}
+
+.sidenav-color {
+    background-color: $primary;
+    color: $light-primary-text;
+}
+
+.horizontal-end {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.username-fs {
+    font-size: 14px;
+}
+
+.vertical-center {
+    align-items: center;
+    display: flex;
+}
