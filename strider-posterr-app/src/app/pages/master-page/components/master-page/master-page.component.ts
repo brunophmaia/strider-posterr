@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DeviceService } from 'src/app/services/device/device.service';
 
 @Component({
   selector: 'posterr-master-page',
@@ -7,9 +8,8 @@ import { Component } from '@angular/core';
 })
 export class MasterPageComponent {
 
-  constructor() { }
+  constructor(public deviceService: DeviceService) { }
 
-  isActive = true;
   username: string = "@brunophmaia";
   menuOpened: boolean = false;
 

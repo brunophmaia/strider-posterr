@@ -8,12 +8,12 @@
     width: 100%;
 }
 
-.h-100 {
-    height: 100%;
-}
-
 .w-20 {
     width: 20%;
+}
+
+.w-80 {
+    width: 80%;
 }
 
 .toolbar-shadow {
@@ -26,6 +26,10 @@
 
 .sidenav-height {
     height: calc(100% - 64px);
+}
+
+.sidenav-height-mobile {
+    height: calc(100% - 56px);
 }
 
 .sidenav-color {

@@ -3,11 +3,14 @@
         <mat-icon> {{ menuOpened ? 'chevron_left' : 'menu' }} </mat-icon>
       </button>
     <span class="p-l-8">POSTERR</span>
-    <div class="w-100 horizontal-end username-fs">{{ username }}</div>
+    <div *ngIf="!(deviceService.isMobile$ | async)" class="w-100 horizontal-end username-fs">{{ username }}</div>
 </mat-toolbar>
 
-<mat-sidenav-container class="sidenav-height">
-    <mat-sidenav class="p-t-16 p-l-16 sidenav-color h-100 w-20" mode="side" [opened]="menuOpened">
+<mat-sidenav-container [ngClass]="{'sidenav-height': !(deviceService.isMobile$ | async), 'sidenav-height-mobile': (deviceService.isMobile$ | async)}">
+    <mat-sidenav (openedChange)="menuOpened = $event"
+                 [opened]="menuOpened"
+                 [mode]="(deviceService.isMobile$ | async) ? 'over' : 'side'"
+                 [ngClass]="{'p-t-16': true, 'p-l-16' : true, 'sidenav-color': true, 'w-20': !(deviceService.isMobile$ | async), 'w-80': (deviceService.isMobile$ | async)}">
         <div i18n="@@acount-info-title">
             Account info
         </div>
