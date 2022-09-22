@@ -1,0 +1,19 @@
+@use '@angular/material' as mat;
+@import "src/styles.scss";
+
+.flex {
+    display: flex;
+}
+
+.user-circle {
+    height: 42px;
+    width: 48px;
+    background-color: mat.get-color-from-palette($posterr-palette-primary, 100);
+    color: mat.get-contrast-color-from-palette($posterr-palette-primary, 100);
+    border-radius: 50%;
+}
+
+.card-repost-bkg {
+    background-color: inherit;
+}
+

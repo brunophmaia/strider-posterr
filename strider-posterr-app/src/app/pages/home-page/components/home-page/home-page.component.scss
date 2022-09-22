@@ -1,0 +1,13 @@
+@use '@angular/material' as mat;
+@import "src/styles.scss";
+
+.post-width-web {
+    width: 40%;
+    min-width: 750px;
+}
+
+.post-border {
+    border-bottom-style: solid;
+    border-width: 1px;
+    border-color: mat.get-color-from-palette($posterr-palette-primary, 50);
+}

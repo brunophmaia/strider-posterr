@@ -1,0 +1,25 @@
+<div>
+    <div class="flex">
+        <div class="user-circle vertical-center horizontal-center">
+            <div>
+                {{ post.author[0].toUpperCase() }}
+            </div>
+        </div>
+        <div class="w-100 p-l-16 vertical-center">
+            {{ author }} · {{ date }}
+        </div>
+        <div *ngIf="!isRepost">
+            <button mat-icon-button>
+                <mat-icon> more_horiz </mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="p-t-16 p-l-4 p-r-4">
+        {{ post.text }}
+    </div>
+    <div *ngIf="post.repost" class="p-t-16 p-r-16 p-l-16">
+        <mat-card class="mat-elevation-z6 card-repost-bkg">
+            <posterr-post [post]="post.repost" [isRepost]="true"></posterr-post>
+        </mat-card>
+    </div>
+</div>

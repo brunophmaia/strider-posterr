@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { DeviceService } from 'src/app/services/device/device.service';
+import { DeviceService } from 'src/app/common/services/device/device.service';
+import { insertAtUsername } from 'src/app/common/util/common.util';
 
 @Component({
   selector: 'posterr-master-page',
@@ -10,7 +11,7 @@ export class MasterPageComponent {
 
   constructor(public deviceService: DeviceService) { }
 
-  username: string = "@brunophmaia";
+  username: string = insertAtUsername("brunophmaia");
   menuOpened: boolean = false;
 
 }

@@ -1,1 +1,9 @@
-<p>home-page works!</p>
+
+<div class="horizontal-center">
+    <div [ngClass]="{'post-width-web': !(deviceService.isMobile$ | async),
+                     'w-100': (deviceService.isMobile$ | async)}">
+        <div *ngFor="let post of posts" class="post-border p-t-32 p-b-32 p-l-16 p-r-16"> 
+            <posterr-post [post]="post"></posterr-post>
+        </div>
+    </div>
+</div>

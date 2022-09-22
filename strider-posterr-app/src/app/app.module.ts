@@ -8,6 +8,7 @@ import { HomePageComponent } from './pages/home-page/components/home-page/home-p
 import { AppRoutingModule } from './app-routing.module';
 import { UserProfileComponent } from './pages/user-profile-page/components/user-profile/user-profile.component';
 import { UserProfileModalComponent } from './pages/user-profile-page/components/user-profile-modal/user-profile-modal.component';
+import { PostComponent } from './common/components/post/post.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { UserProfileModalComponent } from './pages/user-profile-page/components/
     MasterPageComponent,
     HomePageComponent,
     UserProfileComponent,
-    UserProfileModalComponent
+    UserProfileModalComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
