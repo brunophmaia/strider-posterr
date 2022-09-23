@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
 import { Post } from 'src/app/common/models/post.model';
 import { PostRestService } from 'src/app/common/rest-services/post-rest-service';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
@@ -28,23 +28,27 @@ export class HomePageStateService implements OnDestroy {
     this.initChangesPostType();
   }
 
-  initChangesPostType(){
-    this.subs.push(
-      this.formPostType.valueChanges.subscribe((data: PostFilterType) => {
-        if(data == PostFilterType.ALL) {
-          this.loadPosts();
-        } else {
-          this.loadFollowingPosts(this.authService.getLoggedUsername());
-        }
-      })
-    );
-  }
-
   setPostTypeFromPath(postType: PostFilterType){
     this.formPostType.setValue(postType);
   }
 
-  loadPosts(){
+  initChangesPostType(){
+    this.subs.push(
+      this.formPostType.valueChanges.subscribe((data: PostFilterType) => {
+        this.loadPosts(data);
+      })
+    );
+  }
+
+  loadPosts(data: PostFilterType){
+    if(data == PostFilterType.ALL) {
+      this.loadAllPosts();
+    } else {
+      this.loadFollowingPosts(this.authService.getLoggedUsername());
+    }
+  }
+
+  loadAllPosts(){
     this.subs.push(
       this.postRestService.getAll().subscribe(posts => {
         this.subjectPosts.next(posts);
@@ -62,7 +66,10 @@ export class HomePageStateService implements OnDestroy {
 
   createPost(post: Post): Observable<any> {
     post.author = this.authService.getLoggedUsername();
-    return this.postRestService.post(post);
+    return this.postRestService.post(post).pipe(map(p => {
+      this.loadPosts(this.formPostType.value);
+      return p;
+    }));
   }
 
   ngOnDestroy() {

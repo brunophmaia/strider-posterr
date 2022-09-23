@@ -19,7 +19,8 @@
     <div [ngClass]="{'post-width-web': !(deviceService.isMobile$ | async),
                      'w-100': (deviceService.isMobile$ | async)}">
         <div class="toggle-cls p-t-16 w-100">
-            <posterr-post-maker (createPostEvent)="createPost($event)"></posterr-post-maker>
+            <posterr-post-maker [eventCleanPost]="eventCleanPost.asObservable()"
+                                (createPostEvent)="createPost($event)"></posterr-post-maker>
         </div>
         <div>
             <div *ngFor="let post of (posts$ | async)" class="post-border p-t-32 p-b-32 p-l-16 p-r-16"> 

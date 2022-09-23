@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { Post } from 'src/app/common/models/post.model';
 import { DeviceService } from 'src/app/common/services/device/device.service';
 import { allPath, followingPath } from 'src/app/common/util/common.util';
@@ -16,11 +17,13 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   postFilterType = PostFilterType;
   posts$: Observable<Array<Post>>;
+  eventCleanPost: Subject<void> = new Subject<void>();
   subs: Array<Subscription> = [];
 
   constructor(public deviceService: DeviceService,
               public homepageState: HomePageStateService,
-              private router: Router){
+              private router: Router,
+              private snackBar: MatSnackBar){
   }
 
   ngOnInit(){
@@ -33,9 +36,25 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   createPost(post: Post){
-    this.subs.push(this.homepageState.createPost(post).subscribe(() => {
-      console.log("foi");
-    }));
+
+    this.subs.push(
+      this.homepageState.createPost(post).subscribe({
+        next: () => {
+          this.snackBar.open($localize`${"Post created successfully!"}`, "X", {
+            panelClass: "success-post",
+            verticalPosition: "top",
+            duration: 5000
+          });
+          this.eventCleanPost.next();
+        },
+        error: (err => {
+          this.snackBar.open(err, "X", {
+            panelClass: "error-post",
+            verticalPosition: "top"
+          });
+        })
+      })
+    )
   }
 
   private setPostsTypeFromRoute() {
