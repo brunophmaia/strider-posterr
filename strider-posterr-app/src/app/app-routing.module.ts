@@ -1,12 +1,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { allPath, followingPath, userProfilePath } from "./common/util/common.util";
 import { HomePageComponent } from "./pages/home-page/components/home-page/home-page.component";
 import { MasterPageComponent } from "./pages/master-page/components/master-page/master-page.component";
 import { UserProfileComponent } from "./pages/user-profile-page/components/user-profile/user-profile.component";
-
-const allPath = "All";
-const followingPath = "Following";
-const userProfilePath = "Profile";
 
 const routes: Routes = [
   {

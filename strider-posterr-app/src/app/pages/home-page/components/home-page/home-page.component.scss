@@ -7,7 +7,23 @@
 }
 
 .post-border {
-    border-bottom-style: solid;
+    border-top-style: solid;
     border-width: 1px;
     border-color: mat.get-color-from-palette($posterr-palette-primary, 50);
+}
+
+.toggle-color {
+    background-color: mat.get-color-from-palette($posterr-palette-primary, 100);
+    color: mat.get-contrast-color-from-palette($posterr-palette-primary, 100);
+}
+
+.toggle-cls {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: mat.get-color-from-palette($posterr-palette-primary, 10);
+}
+
+.toggle-all ::ng-deep .mat-button-toggle-checked {
+    background-color: mat.get-color-from-palette($posterr-palette-primary, 25);
 }

@@ -6,13 +6,14 @@ const DAY = 24 * HOUR;
 
 export function getPostDateString(postDatetime: Date): string {
     const now = new Date();
+    postDatetime = new Date(postDatetime);
 
     const getFullDate = (includesYear: boolean = false) => {
         const month = postDatetime.toLocaleString('default', { month: 'long' });
         return `${month.substring(0, 3)} ${postDatetime.getDate()}${includesYear ? (`, ${postDatetime.getFullYear()}`) : ""}`;
     };
 
-    const diff = now.getTime() - postDatetime.getTime();
+    const diff = now.getTime() - new Date(postDatetime).getTime();
 
     if(now.getFullYear() != postDatetime.getFullYear()) {
         return getFullDate(true);

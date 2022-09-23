@@ -5,11 +5,15 @@
 $light-primary-text: rgb(241, 241, 241);
 
 $posterr-palette-primary: (
+  10: #FAFAFA,
+  25: #CCCCCC,
   50: #A5A5A5,
   100: #444444,
   500: #202020,
   700: #000000,
   contrast: (
+    10: #000000, 
+    25: #000000, 
     50: #000000,  
     100: $light-primary-text,
     500: $light-primary-text,

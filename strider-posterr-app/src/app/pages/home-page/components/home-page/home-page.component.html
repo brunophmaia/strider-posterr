@@ -1,9 +1,26 @@
-
 <div class="horizontal-center">
     <div [ngClass]="{'post-width-web': !(deviceService.isMobile$ | async),
                      'w-100': (deviceService.isMobile$ | async)}">
-        <div *ngFor="let post of posts" class="post-border p-t-32 p-b-32 p-l-16 p-r-16"> 
-            <posterr-post [post]="post"></posterr-post>
+        <div class="p-t-32 p-b-32 horizontal-center toggle-cls">
+            <mat-button-toggle-group
+                    [value]="homepageState.formPostType.value"
+                    (change)="onChangeToggle($event)"
+                    class="toggle-all"
+                    color="primary">
+                <mat-button-toggle class="toggle-color"
+                                   [value]="postFilterType.ALL"
+                                   i18n="@@all-toggle-desc">All
+                </mat-button-toggle>
+                <mat-button-toggle class="toggle-color"
+                                   [value]="postFilterType.FOLLOWING"
+                                   i18n="@@following-toggle-desc">Following
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <div class="scroll-posts">
+            <div *ngFor="let post of (posts$ | async)" class="post-border p-t-32 p-b-32 p-l-16 p-r-16"> 
+                <posterr-post [post]="post"></posterr-post>
+            </div>
         </div>
     </div>
 </div>
