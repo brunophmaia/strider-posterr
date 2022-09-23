@@ -1,0 +1,11 @@
+<mat-form-field class="w-100" appearance="outline">
+    <textarea [formControl]="form" [maxlength]="maxLength" rows="5" matInput placeholder="What's happening?"></textarea>
+</mat-form-field>
+<div class="flex p-l-8 p-r-8 p-b-16 offset-info-post">
+    <div class="nowrap cls-count">
+        {{ form.value.length }} / {{ maxLength }}
+    </div>
+    <div class="w-100 horizontal-end">
+        <button (click)="createPost()" [disabled]="form.invalid" class="post-btn-cls" mat-raised-button>POST</button>
+    </div>
+</div>

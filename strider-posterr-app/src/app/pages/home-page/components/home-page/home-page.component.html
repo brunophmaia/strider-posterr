@@ -1,23 +1,27 @@
-<div class="horizontal-center">
+<div class="p-t-16 p-r-16 cls-toggle-div horizontal-end">
+    <mat-button-toggle-group
+            [value]="homepageState.formPostType.value"
+            (change)="onChangeToggle($event)"
+            class="toggle-all"
+            color="primary">
+        <mat-button-toggle class="toggle-color"
+                        [value]="postFilterType.ALL"
+                        i18n="@@all-toggle-desc">All
+        </mat-button-toggle>
+        <mat-button-toggle class="toggle-color"
+                        [value]="postFilterType.FOLLOWING"
+                        i18n="@@following-toggle-desc">Following
+        </mat-button-toggle>
+    </mat-button-toggle-group>
+</div>
+
+<div class="horizontal-center align-div">
     <div [ngClass]="{'post-width-web': !(deviceService.isMobile$ | async),
                      'w-100': (deviceService.isMobile$ | async)}">
-        <div class="p-t-32 p-b-32 horizontal-center toggle-cls">
-            <mat-button-toggle-group
-                    [value]="homepageState.formPostType.value"
-                    (change)="onChangeToggle($event)"
-                    class="toggle-all"
-                    color="primary">
-                <mat-button-toggle class="toggle-color"
-                                   [value]="postFilterType.ALL"
-                                   i18n="@@all-toggle-desc">All
-                </mat-button-toggle>
-                <mat-button-toggle class="toggle-color"
-                                   [value]="postFilterType.FOLLOWING"
-                                   i18n="@@following-toggle-desc">Following
-                </mat-button-toggle>
-            </mat-button-toggle-group>
+        <div class="toggle-cls p-t-16 w-100">
+            <posterr-post-maker (createPostEvent)="createPost($event)"></posterr-post-maker>
         </div>
-        <div class="scroll-posts">
+        <div>
             <div *ngFor="let post of (posts$ | async)" class="post-border p-t-32 p-b-32 p-l-16 p-r-16"> 
                 <posterr-post [post]="post"></posterr-post>
             </div>

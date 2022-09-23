@@ -60,6 +60,11 @@ export class HomePageStateService implements OnDestroy {
     )
   }
 
+  createPost(post: Post): Observable<any> {
+    post.author = this.authService.getLoggedUsername();
+    return this.postRestService.post(post);
+  }
+
   ngOnDestroy() {
     this.subs.forEach(s => s.unsubscribe());
   }

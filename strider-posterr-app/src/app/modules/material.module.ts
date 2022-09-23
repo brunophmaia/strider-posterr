@@ -6,15 +6,22 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 const materialModules = [
+  MatInputModule,
   MatToolbarModule,
   MatSidenavModule,
   MatButtonModule,
   MatIconModule,
   MatDialogModule,
   MatCardModule,
-  MatButtonToggleModule
+  MatButtonToggleModule,
+  MatFormFieldModule,
+  FormsModule,
+  ReactiveFormsModule
 ];
 
 @NgModule({

@@ -17,4 +17,8 @@ export class PostRestService {
   getAllFollowing(username: string) {
     return of(this.storageService.getPosts(username));
   }
+
+  post(post: Post): Observable<any> {
+    return of(this.storageService.savePost(post));
+  }
 }

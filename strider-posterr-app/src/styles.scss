@@ -52,6 +52,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   justify-content: center;
 }
 
+.horizontal-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.flex {
+  display: flex;
+}
+
 $max: 64;
 $offset: 4;
 $unit: "px";

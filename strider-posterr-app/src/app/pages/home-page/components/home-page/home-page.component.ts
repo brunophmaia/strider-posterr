@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Post } from 'src/app/common/models/post.model';
 import { DeviceService } from 'src/app/common/services/device/device.service';
 import { allPath, followingPath } from 'src/app/common/util/common.util';
@@ -12,10 +12,11 @@ import { HomePageStateService, PostFilterType } from '../../state/home-page-stat
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnDestroy {
 
   postFilterType = PostFilterType;
   posts$: Observable<Array<Post>>;
+  subs: Array<Subscription> = [];
 
   constructor(public deviceService: DeviceService,
               public homepageState: HomePageStateService,
@@ -31,6 +32,12 @@ export class HomePageComponent implements OnInit {
     this.router.navigate([valueChange.value == PostFilterType.ALL ? allPath : followingPath]);
   }
 
+  createPost(post: Post){
+    this.subs.push(this.homepageState.createPost(post).subscribe(() => {
+      console.log("foi");
+    }));
+  }
+
   private setPostsTypeFromRoute() {
     switch(this.router.url) {
       case `/${allPath}`:
@@ -40,5 +47,9 @@ export class HomePageComponent implements OnInit {
         this.homepageState.setPostTypeFromPath(PostFilterType.FOLLOWING);
         break;
     }
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach(s => s.unsubscribe());
   }
 }

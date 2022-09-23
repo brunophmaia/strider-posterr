@@ -11,19 +11,35 @@ export class LocalStorageService {
   keyFollowingUsers = "followingUsers-posterr-strider";
 
   getPosts(username?: string): Array<Post> {
+    let posts = this.getPostsFromStorage();
+
+    if(username) {
+      const followingUsers = this.getFollowingUsers(username);
+      posts = posts.filter(post => followingUsers.some(fu => fu == post.author));
+    }
+
+    posts.sort((a, b) => new Date(a.datetime) < new Date(b.datetime) ? 1 : -1);
+    return posts;
+  }
+
+  savePost(post: Post) {
+    post.datetime = new Date();
+    const posts = this.getPostsFromStorage();
+    posts.push(post);
+    this.storePosts(posts);
+  }
+
+  private storePosts(posts: Array<Post>){
+    localStorage.setItem(this.keyPosts, JSON.stringify(posts))
+  }
+
+  private getPostsFromStorage(): Array<Post> {
     const postsValue = localStorage.getItem(this.keyPosts);
 
     if(postsValue == null) {
       return [];
-    }
-
-    const posts = JSON.parse(postsValue) as Array<Post>;
-
-    if(username == null) {
-      return posts;
     } else {
-      const followingUsers = this.getFollowingUsers(username);
-      return posts.filter(post => followingUsers.some(fu => fu == post.author));
+      return JSON.parse(postsValue) as Array<Post>;
     }
   }
 

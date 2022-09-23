@@ -1,0 +1,27 @@
+@use '@angular/material' as mat;
+@import "src/styles.scss";
+
+.border-text-area {
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: mat.get-color-from-palette($posterr-palette-primary, 50);
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.offset-info-post {
+    margin-top: -12px;
+}
+
+.cls-count {
+    color: mat.get-color-from-palette($posterr-palette-primary, 100);
+    font-size: 12px;
+}
+
+.post-btn-cls {
+    background-color: mat.get-color-from-palette($posterr-palette-primary, 100);
+    color: mat.get-contrast-color-from-palette($posterr-palette-primary, 100);
+}
