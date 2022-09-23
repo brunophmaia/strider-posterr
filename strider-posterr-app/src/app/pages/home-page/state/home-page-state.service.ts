@@ -28,8 +28,10 @@ export class HomePageStateService implements OnDestroy {
     this.initChangesPostType();
   }
 
-  setPostTypeFromPath(postType: PostFilterType){
-    this.formPostType.setValue(postType);
+  setPostTypeFromPath(postType: PostFilterType, fromUserProfile: boolean = false){
+    if(!fromUserProfile || !this.formPostType.value) {
+      this.formPostType.setValue(postType);
+    }
   }
 
   initChangesPostType(){

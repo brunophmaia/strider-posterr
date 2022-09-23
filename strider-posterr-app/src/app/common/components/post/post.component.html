@@ -6,7 +6,9 @@
             </div>
         </div>
         <div class="w-100 p-l-16 vertical-center">
-            {{ author }} · {{ date }}
+            <div [ngClass]="{mouseover: enabledClickUser}"(click)="openUser()">{{ author }}</div>
+            <div class="p-r-8 p-l-8">·</div>
+            <div>{{ date }}</div>
         </div>
         <div *ngIf="!isRepost">
             <button mat-icon-button>

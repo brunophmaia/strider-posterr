@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Post } from '../../models/post.model';
-import { insertAtUsername } from '../../util/common.util';
+import { insertAtUsername, userProfilePath } from '../../util/common.util';
 import { getPostDateString } from '../../util/date.util';
 
 @Component({
@@ -12,13 +13,22 @@ export class PostComponent implements OnInit {
 
   @Input() post: Post
   @Input() isRepost: boolean = false;
+  @Input() enabledClickUser: boolean = true;
 
   author: string;
   date: string;
 
+  constructor(private router: Router){}
+
   ngOnInit() {
     this.setAuthor();
     this.setDate();
+  }
+
+  openUser(){
+    if(this.enabledClickUser) {
+      this.router.navigate([`${userProfilePath}/${this.post.author}`]);
+    }
   }
 
   private setAuthor(){

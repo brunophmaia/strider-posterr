@@ -65,6 +65,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
       case `/${followingPath}`:
         this.homepageState.setPostTypeFromPath(PostFilterType.FOLLOWING);
         break;
+      default:
+        this.homepageState.setPostTypeFromPath(PostFilterType.ALL, true);
+        break;
     }
   }
 
