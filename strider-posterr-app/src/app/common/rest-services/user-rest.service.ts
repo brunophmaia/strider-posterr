@@ -13,4 +13,16 @@ export class UserRestService {
   get(username: string): Observable<UserInfo> {
     return this.storageService.getUserInfo(username);
   }
+
+  getFollowingStatus(loggedUser: string, accountUsername: string): Observable<boolean> {
+    return this.storageService.getFollowingStatus(loggedUser, accountUsername);
+  }
+
+  follow(loggedUser: string, accountUsername: string): Observable<boolean> {
+    return this.storageService.follow(loggedUser, accountUsername);
+  }
+
+  unfollow(loggedUser: string, accountUsername: string): Observable<boolean> {
+    return this.storageService.unfollow(loggedUser, accountUsername);
+  }
 }

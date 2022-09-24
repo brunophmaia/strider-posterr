@@ -49,6 +49,29 @@ export class LocalStorageService {
     return of(true);
   }
 
+  getFollowingStatus(loggedUser: string, accountUsername: string): Observable<boolean> {
+    const followingUsers = this.getFollowingFromStorage();
+    return of(followingUsers.some(fu => fu.username == loggedUser && fu.userFollowing == accountUsername));
+  }
+
+  follow(loggedUser: string, accountUsername: string): Observable<boolean> {
+    let followingUsers = this.getFollowingFromStorage();
+    followingUsers.push({
+      username: loggedUser,
+      userFollowing: accountUsername
+    });
+    this.storeUserFollowing(followingUsers);
+    return of(true);
+  }
+
+  unfollow(loggedUser: string, accountUsername: string): Observable<boolean> {
+    let followingUsers = this.getFollowingFromStorage();
+    const index = followingUsers.findIndex(fu => fu.username == loggedUser && fu.userFollowing == accountUsername);
+    followingUsers.splice(index, 1);
+    this.storeUserFollowing(followingUsers);
+    return of(true);
+  }
+
   getUserInfo(username: string): Observable<UserInfo> {
     const postsUser = this.getPostsFromStorage().filter(p => p.author == username);
     const followingUsers = this.getFollowingFromStorage();
@@ -75,6 +98,10 @@ export class LocalStorageService {
 
   private storePosts(posts: Array<Post>){
     localStorage.setItem(this.keyPosts, JSON.stringify(posts))
+  }
+
+  private storeUserFollowing(usersFollowing: Array<UserFollowing>){
+    localStorage.setItem(this.keyFollowingUsers, JSON.stringify(usersFollowing))
   }
 
   private getPostsFromStorage(): Array<Post> {

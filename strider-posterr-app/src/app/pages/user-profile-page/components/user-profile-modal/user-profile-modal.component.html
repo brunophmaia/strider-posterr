@@ -32,3 +32,9 @@
         </div>
     </div>
 </div>
+<div [ngClass]="{'p-t-16': true, 'w-100': true, 'flex': true, 'horizontal-center': (deviceService.isMobile$ | async)}">
+    <div [ngClass]="{'p-r-4': true, 'w-100': (deviceService.isMobile$ | async)}">
+        <button (click)="followAction()" *ngIf="followingInfo != undefined" mat-raised-button class="w-100 follow-btn-cls">{{ followingInfo ? 'UNFOLLOW' : 'FOLLOW' }} </button></div>
+    <div [ngClass]="{'p-l-4': true, 'w-100': (deviceService.isMobile$ | async)}">
+        <button mat-raised-button class="w-100 post-btn-cls">MAKE A POST</button></div>
+</div>

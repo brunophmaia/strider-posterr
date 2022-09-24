@@ -1,6 +1,16 @@
 @use '@angular/material' as mat;
 @import "src/styles.scss";
 
+.follow-btn-cls {
+    background-color: mat.get-color-from-palette($posterr-palette-primary, 100);
+    color: mat.get-contrast-color-from-palette($posterr-palette-primary, 100);
+}
+
+.post-btn-cls {
+    background-color: mat.get-color-from-palette($posterr-palette-primary, 10);
+    color: mat.get-contrast-color-from-palette($posterr-palette-primary, 10);
+}
+
 .user-circle {
     background-color: mat.get-color-from-palette($posterr-palette-primary, 100);
     color: mat.get-contrast-color-from-palette($posterr-palette-primary, 100);
@@ -14,6 +24,7 @@
 }
 
 .user-circle-m {
+    font-size: 24px;
     height: 58px;
     width: 58px;
 }

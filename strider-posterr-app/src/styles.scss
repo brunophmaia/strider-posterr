@@ -64,6 +64,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   display: flex;
 }
 
+::ng-deep .success-post {
+  margin-top: 70px !important;
+}
+
 $max: 64;
 $offset: 4;
 $unit: "px";
