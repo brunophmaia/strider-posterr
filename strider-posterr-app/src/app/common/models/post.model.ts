@@ -3,5 +3,6 @@ export class Post {
     author: string;
     text?: string;
     repost?: Post;
+    idRepost?: string;
     datetime: Date;
 }

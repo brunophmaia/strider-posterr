@@ -1,1 +1,34 @@
-<p>user-profile-modal works!</p>
+<div [ngClass]="{flex: !(deviceService.isMobile$ | async)}">
+    <div class="flex">
+        <div [ngClass]="{'user-circle' : true,  'horizontal-center': true, 'vertical-center': true,
+                         'user-circle-w': !(deviceService.isMobile$ | async), 'user-circle-m': (deviceService.isMobile$ | async)}">{{ username[0].toUpperCase() }}</div>
+        <div class="p-l-16 vertical-center">
+            <div>
+                <div [ngClass]="{'fs-username': !(deviceService.isMobile$ | async), 'p-b-4': true}">{{ formattedUsername }}</div>
+                <div class="nowrap">Joined date: {{ joinedDate }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="w-100 horizontal-center">
+        <div [ngClass]="{'p-t-16': (deviceService.isMobile$ | async), flex: true, 'w-60': !(deviceService.isMobile$ | async), 'w-100': (deviceService.isMobile$ | async), 'vertical-center': true}">
+            <div class="w-100 horizontal-center">
+                <div>
+                    <div [ngClass]="{'text-center': true, 'number-cls-m': (deviceService.isMobile$ | async), 'number-cls-w': !(deviceService.isMobile$ | async)}">{{ userInfo?.followersCount}}</div>
+                    <div class="text-center">Followers</div>
+                </div>
+            </div>
+            <div class="w-100 horizontal-center">
+                <div>
+                    <div [ngClass]="{'text-center': true, 'number-cls-m': (deviceService.isMobile$ | async), 'number-cls-w': !(deviceService.isMobile$ | async)}">{{ userInfo?.followingCount}}</div>
+                    <div class="text-center">Following</div>
+                </div>
+            </div>
+            <div class="w-100 horizontal-center">
+                <div>
+                    <div [ngClass]="{'text-center': true, 'number-cls-m': (deviceService.isMobile$ | async), 'number-cls-w': !(deviceService.isMobile$ | async)}">{{ userInfo?.postCount}}</div>
+                    <div class="text-center">Posts</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

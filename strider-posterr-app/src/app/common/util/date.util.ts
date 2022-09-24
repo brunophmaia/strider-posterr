@@ -8,15 +8,10 @@ export function getPostDateString(postDatetime: Date): string {
     const now = new Date();
     postDatetime = new Date(postDatetime);
 
-    const getFullDate = (includesYear: boolean = false) => {
-        const month = postDatetime.toLocaleString('default', { month: 'long' });
-        return `${month.substring(0, 3)} ${postDatetime.getDate()}${includesYear ? (`, ${postDatetime.getFullYear()}`) : ""}`;
-    };
-
     const diff = now.getTime() - new Date(postDatetime).getTime();
 
     if(now.getFullYear() != postDatetime.getFullYear()) {
-        return getFullDate(true);
+        return getFullDate(postDatetime, true);
     }
     else if (diff < MINUTE) {
         return `${Math.round(diff / SECOND)}s`;
@@ -28,6 +23,11 @@ export function getPostDateString(postDatetime: Date): string {
         return `${Math.round(diff / HOUR)}h`;
     }
     else {
-        return getFullDate();
+        return getFullDate(postDatetime);
     }
+}
+
+export function getFullDate(postDatetime: Date, includesYear: boolean = false) {
+    const month = postDatetime.toLocaleString('default', { month: 'long' });
+    return `${month.substring(0, 3)} ${postDatetime.getDate()}${includesYear ? (`, ${postDatetime.getFullYear()}`) : ""}`;
 }

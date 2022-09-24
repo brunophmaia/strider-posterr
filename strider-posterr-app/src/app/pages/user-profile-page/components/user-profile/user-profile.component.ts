@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { Subscription } from 'rxjs';
 import { UserProfileModalComponent } from '../user-profile-modal/user-profile-modal.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouteService } from 'src/app/common/services/route/route.service';
-import { allPath, followingPath } from 'src/app/common/util/common.util';
+import { allPath, followingPath, usernameParam } from 'src/app/common/util/common.util';
+import { DeviceService } from 'src/app/common/services/device/device.service';
 
 @Component({
   selector: 'posterr-user-profile',
@@ -17,15 +18,25 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   constructor(private dialog: MatDialog,
               private router: Router,
+              private route: ActivatedRoute,
+              private deviceService: DeviceService,
               private routeService: RouteService) { }
 
   ngOnInit() {
-    this.subs.push(
-      this.dialog.open(UserProfileModalComponent).afterClosed()
-        .subscribe(() => {
-          this.navigateRouteAfterProfileClosed();
-        })
-    );
+    const subMobile = this.deviceService.isMobile$.subscribe(isMobile => {
+        this.subs.push(
+          this.dialog.open(UserProfileModalComponent, {
+            data: this.route.snapshot.paramMap.get(usernameParam),
+            width: isMobile ? "95%" : "80%",
+            panelClass: "user-profile-dialog",
+            height: "90%"
+          }).afterClosed()
+            .subscribe(() => {
+              this.navigateRouteAfterProfileClosed();
+          })
+        );
+    });
+    subMobile.unsubscribe();
   }
 
   private navigateRouteAfterProfileClosed(){

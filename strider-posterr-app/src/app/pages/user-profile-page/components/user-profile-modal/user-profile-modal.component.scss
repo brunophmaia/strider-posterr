@@ -1,0 +1,47 @@
+@use '@angular/material' as mat;
+@import "src/styles.scss";
+
+.user-circle {
+    background-color: mat.get-color-from-palette($posterr-palette-primary, 100);
+    color: mat.get-contrast-color-from-palette($posterr-palette-primary, 100);
+    border-radius: 50%;
+}
+
+.user-circle-w {
+    font-size: 48px;
+    height: 96px;
+    width: 96px;
+}
+
+.user-circle-m {
+    height: 58px;
+    width: 58px;
+}
+
+.fs-username {
+    font-size: 22px;
+}
+
+.w-40 {
+    width: 40%;
+}
+
+.w-60 {
+    width: 60%;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.number-cls-w {
+    font-size: 32px;
+}
+
+.number-cls-m {
+    font-size: 22px;
+}
+
+.nowrap {
+    white-space: nowrap;
+}

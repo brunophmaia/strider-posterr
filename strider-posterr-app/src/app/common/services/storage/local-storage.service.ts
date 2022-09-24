@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { Post } from '../../models/post.model';
 import { UserFollowing } from '../../models/user-following.model';
+import { UserInfo } from '../../models/user-info.model';
+import { User } from '../../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,7 @@ export class LocalStorageService {
 
   keyPosts = "posts-posterr-strider";
   keyFollowingUsers = "followingUsers-posterr-strider";
+  keyUsers = "users-posterr-strider";
 
   getPosts(username?: string): Observable<Array<Post>> {
     let posts = this.getPostsFromStorage();
@@ -46,6 +49,20 @@ export class LocalStorageService {
     return of(true);
   }
 
+  getUserInfo(username: string): Observable<UserInfo> {
+    const postsUser = this.getPostsFromStorage().filter(p => p.author == username);
+    const followingUsers = this.getFollowingFromStorage();
+    const user = this.getUsersFromStorage().find(u => u.username == username) as User;
+
+    return of({
+      postCount: postsUser.length,
+      followersCount: followingUsers.filter(fu => fu.userFollowing == username).length,
+      followingCount: followingUsers.filter(fu => fu.username == username).length,
+      username: username,
+      joinedDate: new Date(user?.joinedDate)
+    });
+  }
+
   private getCountDailyPostUser(posts: Array<Post>, username: string): number {
     let today = new Date();
     today.setMilliseconds(0);
@@ -70,14 +87,28 @@ export class LocalStorageService {
     }
   }
 
-  private getFollowingUsers(username: string): Array<string> {
+  private getFollowingFromStorage(): Array<UserFollowing>{
     const followingUsersValue = localStorage.getItem(this.keyFollowingUsers);
 
     if(followingUsersValue == null) {
       return [];
+    } else {
+      return JSON.parse(followingUsersValue) as Array<UserFollowing>;
     }
+  }
 
-    const followingUsers = JSON.parse(followingUsersValue) as Array<UserFollowing>;
+  private getUsersFromStorage(): Array<User>{
+    const usersValue = localStorage.getItem(this.keyUsers);
+
+    if(usersValue == null) {
+      return [];
+    } else {
+      return JSON.parse(usersValue) as Array<User>;
+    }
+  }
+
+  private getFollowingUsers(username: string): Array<string> {
+    const followingUsers = this.getFollowingFromStorage();
     return followingUsers.filter(fu => fu.username == username).map(fu => fu.userFollowing);
   }
 }
