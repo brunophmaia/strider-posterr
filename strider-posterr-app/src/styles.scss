@@ -8,6 +8,7 @@ $error: rgb(255, 0, 0);
 $link-text: rgb(0, 13, 133);
 
 $posterr-palette-primary: (
+  5: white,
   10: #FAFAFA,
   25: #CCCCCC,
   50: #A5A5A5,
@@ -15,6 +16,7 @@ $posterr-palette-primary: (
   500: #202020,
   700: #000000,
   contrast: (
+    1: #000000,   
     10: #000000, 
     25: #000000, 
     50: #000000,  
@@ -62,6 +64,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .flex {
   display: flex;
+}
+
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.post-border {
+  border-bottom-style: solid;
+  border-width: 1px;
+  border-color: mat.get-color-from-palette($posterr-palette-primary, 25);
 }
 
 ::ng-deep .success-post {

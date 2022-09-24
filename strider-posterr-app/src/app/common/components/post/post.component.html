@@ -21,7 +21,7 @@
     </div>
     <div *ngIf="post.repost" class="p-t-16 p-r-16 p-l-16">
         <mat-card class="mat-elevation-z6 card-repost-bkg">
-            <posterr-post [post]="post.repost" [isRepost]="true"></posterr-post>
+            <posterr-post [post]="post.repost" [enabledClickUser]="enabledClickUser" [isRepost]="true"></posterr-post>
         </mat-card>
     </div>
 </div>

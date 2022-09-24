@@ -28,6 +28,13 @@ export class LocalStorageService {
     return of(posts);
   }
 
+  getPostsByUser(username?: string): Observable<Array<Post>> {
+    let posts = this.getPostsFromStorage();
+    const postsFiltered = posts.filter(post => username == post.author);
+    postsFiltered.sort((a, b) => new Date(a.datetime) < new Date(b.datetime) ? 1 : -1);
+    return of(postsFiltered);
+  }
+
   savePost(post: Post): Observable<any> {
     post.datetime = new Date();
     const posts = this.getPostsFromStorage();

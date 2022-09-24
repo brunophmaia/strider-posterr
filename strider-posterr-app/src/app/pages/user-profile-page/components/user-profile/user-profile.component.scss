@@ -1,3 +1,7 @@
 ::ng-deep .user-profile-dialog {
     max-width: unset !important;
 }
+
+::ng-deep .user-profile-dialog ::ng-deep mat-dialog-container {
+    padding-top: 0px;
+}

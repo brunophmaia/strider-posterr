@@ -21,4 +21,8 @@ export class PostRestService {
   post(post: Post): Observable<any> {
     return this.storageService.savePost(post);
   }
+
+  getByUser(username: string): Observable<any> {
+    return this.storageService.getPostsByUser(username);
+  }
 }

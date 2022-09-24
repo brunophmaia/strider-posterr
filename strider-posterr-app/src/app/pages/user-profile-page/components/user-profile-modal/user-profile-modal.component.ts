@@ -2,7 +2,9 @@ import { Component, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
+import { Post } from 'src/app/common/models/post.model';
 import { UserInfo } from 'src/app/common/models/user-info.model';
+import { PostRestService } from 'src/app/common/rest-services/post-rest-service';
 import { UserRestService } from 'src/app/common/rest-services/user-rest.service';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { DeviceService } from 'src/app/common/services/device/device.service';
@@ -21,12 +23,14 @@ export class UserProfileModalComponent implements OnDestroy {
   formattedUsername: string;
   joinedDate: string;
   followingInfo: boolean;
+  posts: Array<Post>;
   subs: Array<Subscription> = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) username: string,
               public deviceService: DeviceService,
               public dialogRef: MatDialogRef<UserProfileModalComponent>,
               private userRestService: UserRestService,
+              private postRestService: PostRestService,
               private authService: AuthService,
               private snackBar: MatSnackBar) {
     this.username = username;
@@ -36,6 +40,7 @@ export class UserProfileModalComponent implements OnDestroy {
   loadData() {
     this.loadUserInfo();
     this.loadFollowingInfo();
+    this.loadUsersPosts();
   }
 
   loadUserInfo(){
@@ -57,6 +62,14 @@ export class UserProfileModalComponent implements OnDestroy {
         })
       );
     }
+  }
+
+  loadUsersPosts(){
+    this.subs.push(
+      this.postRestService.getByUser(this.username).subscribe(posts => {
+        this.posts = posts;
+      })
+    );
   }
 
   followAction(){
