@@ -23,7 +23,9 @@ export class PostMakerComponent implements OnInit, OnDestroy {
   }
 
   initObservableCleanPost(){
-    this.subs.push(this.eventCleanPost.subscribe(() => this.form.setValue("")));
+    if(this.eventCleanPost) {
+      this.subs.push(this.eventCleanPost.subscribe(() => this.form.setValue("")));
+    }
   }
 
   createPost(){

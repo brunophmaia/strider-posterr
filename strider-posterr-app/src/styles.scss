@@ -82,6 +82,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-top: 70px !important;
 }
 
+::ng-deep .error-post {
+  margin-top: 70px !important;
+  background-color: $error;
+  color: $light-primary-text
+}
+
 $max: 64;
 $offset: 4;
 $unit: "px";

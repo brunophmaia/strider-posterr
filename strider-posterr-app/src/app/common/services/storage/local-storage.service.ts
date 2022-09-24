@@ -37,6 +37,8 @@ export class LocalStorageService {
 
   savePost(post: Post): Observable<any> {
     post.datetime = new Date();
+    post.id = `${post.datetime.getTime()}-${post.author}`;
+
     const posts = this.getPostsFromStorage();
 
     if(this.getCountDailyPostUser(posts, post.author) >= this.postsDailyLimit) {

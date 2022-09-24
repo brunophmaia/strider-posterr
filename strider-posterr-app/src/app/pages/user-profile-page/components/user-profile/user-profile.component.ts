@@ -29,7 +29,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             data: this.route.snapshot.paramMap.get(usernameParam),
             width: isMobile ? "95%" : "80%",
             panelClass: "user-profile-dialog",
-            height: "90%"
+            height: "90%",
+            autoFocus: false
           }).afterClosed()
             .subscribe(() => {
               this.navigateRouteAfterProfileClosed();

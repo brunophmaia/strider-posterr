@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Post } from 'src/app/common/models/post.model';
 import { UserInfo } from 'src/app/common/models/user-info.model';
 import { PostRestService } from 'src/app/common/rest-services/post-rest-service';
@@ -24,6 +24,8 @@ export class UserProfileModalComponent implements OnDestroy {
   joinedDate: string;
   followingInfo: boolean;
   posts: Array<Post>;
+  postWriteEnabled: boolean = false;
+  eventCleanPost: Subject<void> = new Subject<void>();
   subs: Array<Subscription> = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) username: string,
@@ -88,6 +90,35 @@ export class UserProfileModalComponent implements OnDestroy {
         this.loadFollowingInfo();
       })
     );
+  }
+
+  createPost(post: Post){
+    post.author = this.username;
+
+    this.subs.push(
+      this.postRestService.post(post).subscribe({
+        next: () => {
+          this.snackBar.open($localize`${"Post created successfully!"}`, "X", {
+            panelClass: "success-post",
+            verticalPosition: "top",
+            duration: 5000
+          });
+          this.eventCleanPost.next();
+          this.loadData();
+          this.postWriteEnabled = false;
+        },
+        error: (err => {
+          this.snackBar.open(err, "X", {
+            panelClass: "error-post",
+            verticalPosition: "top"
+          });
+        })
+      })
+    )
+  }
+
+  close(){
+    this.dialogRef.close();
   }
 
   ngOnDestroy(){
