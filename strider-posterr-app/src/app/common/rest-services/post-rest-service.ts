@@ -18,6 +18,10 @@ export class PostRestService {
     return this.storageService.getPosts(username);
   }
 
+  get(postId: string): Observable<any> {
+    return this.storageService.getPost(postId);
+  }
+
   post(post: Post): Observable<any> {
     return this.storageService.savePost(post);
   }

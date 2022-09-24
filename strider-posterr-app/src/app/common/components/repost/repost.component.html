@@ -1,0 +1,10 @@
+<div class="p-b-8 horizontal-end">
+    <button (click)="close()"mat-icon-button>
+        <mat-icon> close </mat-icon>
+    </button>
+</div>
+<posterr-post-maker (createPostEvent)="createPost($event)" [isRepost]="true">
+    <div class="p-t-16 p-b-16">
+        <posterr-post [post]="post" [enabledClickUser]="false" [isRepost]="true"></posterr-post>
+    </div>
+</posterr-post-maker>

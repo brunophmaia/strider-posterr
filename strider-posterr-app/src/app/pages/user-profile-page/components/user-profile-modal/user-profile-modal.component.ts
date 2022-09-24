@@ -74,6 +74,10 @@ export class UserProfileModalComponent implements OnDestroy {
     );
   }
 
+  reposted(){
+    this.loadData();
+  }
+
   followAction(){
     const subFollow = this.followingInfo ? this.userRestService.unfollow(this.authService.getLoggedUsername(), this.username) : 
                                                                    this.userRestService.follow(this.authService.getLoggedUsername(), this.username);

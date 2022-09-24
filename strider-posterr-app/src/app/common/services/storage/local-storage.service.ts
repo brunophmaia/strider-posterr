@@ -35,6 +35,10 @@ export class LocalStorageService {
     return of(postsFiltered);
   }
 
+  getPost(postId: string) {
+    return of(this.getPostsFromStorage().find(p => p.id == postId));
+  }
+
   savePost(post: Post): Observable<any> {
     post.datetime = new Date();
     post.id = `${post.datetime.getTime()}-${post.author}`;

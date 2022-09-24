@@ -11,8 +11,8 @@
             <div>{{ date }}</div>
         </div>
         <div *ngIf="!isRepost">
-            <button mat-icon-button>
-                <mat-icon> more_horiz </mat-icon>
+            <button (click)="repost()" mat-icon-button>
+                <mat-icon> share </mat-icon>
             </button>
         </div>
     </div>

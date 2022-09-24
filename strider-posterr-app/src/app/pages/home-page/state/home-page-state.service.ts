@@ -50,6 +50,10 @@ export class HomePageStateService implements OnDestroy {
     }
   }
 
+  reloadPosts() {
+    this.loadPosts(this.formPostType.value);
+  }
+
   loadAllPosts(){
     this.subs.push(
       this.postRestService.getAll().subscribe(posts => {

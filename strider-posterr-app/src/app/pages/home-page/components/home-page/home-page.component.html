@@ -24,7 +24,9 @@
         </div>
         <div>
             <div *ngFor="let post of (posts$ | async)" class="post-border p-t-32 p-b-32 p-l-16 p-r-16"> 
-                <posterr-post [post]="post"></posterr-post>
+                <posterr-post [repostAuthor]="loggedUser"
+                              [post]="post"
+                              (eventReposted)="reposted()"></posterr-post>
             </div>
         </div>
     </div>

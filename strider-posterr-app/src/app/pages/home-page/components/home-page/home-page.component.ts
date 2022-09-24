@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Post } from 'src/app/common/models/post.model';
+import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { DeviceService } from 'src/app/common/services/device/device.service';
 import { allPath, followingPath } from 'src/app/common/util/common.util';
 import { HomePageStateService, PostFilterType } from '../../state/home-page-state.service';
@@ -18,21 +19,28 @@ export class HomePageComponent implements OnInit, OnDestroy {
   postFilterType = PostFilterType;
   posts$: Observable<Array<Post>>;
   eventCleanPost: Subject<void> = new Subject<void>();
+  loggedUser: string;
   subs: Array<Subscription> = [];
 
   constructor(public deviceService: DeviceService,
               public homepageState: HomePageStateService,
+              public authService: AuthService,
               private router: Router,
               private snackBar: MatSnackBar){
   }
 
   ngOnInit(){
     this.posts$ = this.homepageState.posts$;
+    this.loggedUser = this.authService.getLoggedUsername();
     this.setPostsTypeFromRoute();
   }
 
   onChangeToggle(valueChange: MatButtonToggleChange){
     this.router.navigate([valueChange.value == PostFilterType.ALL ? allPath : followingPath]);
+  }
+
+  reposted(){
+    this.homepageState.reloadPosts();
   }
 
   createPost(post: Post){

@@ -56,7 +56,7 @@
     <div [ngClass]="{'width-post-w': !(deviceService.isMobile$ | async), 'w-100': (deviceService.isMobile$ | async)}">
         <div class="w-100">
             <div *ngFor="let post of posts" [ngClass]="{'post-border': true,  'p-t-32': true, 'p-b-32': true, 'p-l-16': !(deviceService.isMobile$ | async), 'p-r-16': !(deviceService.isMobile$ | async)}"> 
-                <posterr-post [enabledClickUser]="false" [post]="post"></posterr-post>
+                <posterr-post [repostAuthor]="username" [enabledClickUser]="false" [post]="post" (eventReposted)="reposted()"></posterr-post>
             </div>
         </div>
     </div>

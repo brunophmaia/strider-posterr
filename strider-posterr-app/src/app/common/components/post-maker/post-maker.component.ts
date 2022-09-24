@@ -11,6 +11,7 @@ import { Post } from '../../models/post.model';
 export class PostMakerComponent implements OnInit, OnDestroy {
 
   @Input() eventCleanPost: Observable<void>;
+  @Input() isRepost: boolean = false;
 
   @Output() createPostEvent: EventEmitter<Post> = new EventEmitter();
 

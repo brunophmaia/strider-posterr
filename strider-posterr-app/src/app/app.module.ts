@@ -10,6 +10,7 @@ import { UserProfileComponent } from './pages/user-profile-page/components/user-
 import { UserProfileModalComponent } from './pages/user-profile-page/components/user-profile-modal/user-profile-modal.component';
 import { PostComponent } from './common/components/post/post.component';
 import { PostMakerComponent } from './common/components/post-maker/post-maker.component';
+import { RepostComponent } from './common/components/repost/repost.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PostMakerComponent } from './common/components/post-maker/post-maker.co
     UserProfileComponent,
     UserProfileModalComponent,
     PostComponent,
-    PostMakerComponent
+    PostMakerComponent,
+    RepostComponent
   ],
   imports: [
     BrowserModule,
