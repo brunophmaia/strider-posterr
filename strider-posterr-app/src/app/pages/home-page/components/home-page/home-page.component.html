@@ -1,4 +1,9 @@
-<div class="p-t-16 p-r-16 cls-toggle-div horizontal-end">
+<div [ngClass]="{'p-t-16': !(deviceService.isMobile$ | async), 
+                 'p-t-8': (deviceService.isMobile$ | async), 
+                 'p-r-16': true,  
+                 'cls-toggle-div': true,
+                 'horizontal-end': true,
+                 'cls-toggle-div-m': (deviceService.isMobile$ | async)}">
     <mat-button-toggle-group
             [value]="homepageState.formPostType.value"
             (change)="onChangeToggle($event)"
@@ -19,10 +24,13 @@
     <div [ngClass]="{'post-width-web': !(deviceService.isMobile$ | async),
                      'w-100': (deviceService.isMobile$ | async)}">
         <div class="sticky-top bkg-header p-t-16 w-100">
-            <posterr-post-maker [eventCleanPost]="eventCleanPost.asObservable()"
-                                (createPostEvent)="createPost($event)"></posterr-post-maker>
+            <div [ngClass]="{'post-width-m': (deviceService.isMobile$ | async)}">
+                <posterr-post-maker [enableMinimize]="(deviceService.isMobile$ | async)"
+                                    [eventCleanPost]="eventCleanPost.asObservable()"
+                                    (createPostEvent)="createPost($event)"></posterr-post-maker>
+            </div>
         </div>
-        <div>
+        <div [ngClass]="{'post-width-m': (deviceService.isMobile$ | async), 'p-t-40': (deviceService.isMobile$ | async)}">
             <div *ngFor="let post of (posts$ | async)" class="post-border p-t-32 p-b-32 p-l-16 p-r-16"> 
                 <posterr-post [repostAuthor]="loggedUser"
                               [post]="post"

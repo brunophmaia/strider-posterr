@@ -23,8 +23,31 @@
     position: sticky;
     top: 0;
     right: 0;
+    background-color: mat.get-color-from-palette($posterr-palette-primary, 10);
+}
+
+.cls-toggle-div-m {
+    top: 80px !important;
+    z-index: 1;
 }
 
 .align-div {
     margin-top: -85px;
 }
+
+.post-width-m {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.cls-toggle-div-m  ::ng-deep .mat-button-toggle-label-content {
+    padding-top: unset !important;
+    padding-bottom: unset !important;
+    height: 25px !important;  
+    align-items: center !important;
+    display: flex !important;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+

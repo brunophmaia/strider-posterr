@@ -12,15 +12,45 @@ export class PostMakerComponent implements OnInit, OnDestroy {
 
   @Input() eventCleanPost: Observable<void>;
   @Input() isRepost: boolean = false;
+  @Input() set enableMinimize (value: any) {
+    this._enableMinimize = value;
+    if(value) {
+      this.minimize();
+    }
+  }
 
   @Output() createPostEvent: EventEmitter<Post> = new EventEmitter();
 
-  form: FormControl = new FormControl("", Validators.required);
+  _enableMinimize: boolean;
+  form: FormControl = new FormControl("");
   maxLength = 777;
+  rows: number = 5;
   subs: Array<Subscription> = [];
 
   ngOnInit(){
     this.initObservableCleanPost();
+    this.initFormChanges();
+  }
+  
+  initFormChanges(){
+    this.subs.push(this.form.valueChanges.subscribe((data: string) => {
+        if(this._enableMinimize) {
+          if(data.length) {
+            this.maximize();
+          } else {
+            this.minimize();
+          }
+        }
+      })
+    );
+  }
+
+  minimize(){
+    this.rows = 1;
+  }
+
+  maximize(){
+    this.rows = 5;
   }
 
   initObservableCleanPost(){

@@ -22,6 +22,10 @@
     color: mat.get-color-from-palette($posterr-palette-primary, 75);
 }
 
+.overflow-break {
+    overflow-wrap: break-word;
+}
+
 ::ng-deep .profile-repost {
     max-width: unset !important;
 }

@@ -12,10 +12,6 @@
     white-space: nowrap;
 }
 
-.offset-info-post {
-    margin-top: -20px;
-}
-
 .cls-count {
     color: mat.get-color-from-palette($posterr-palette-primary, 100);
     font-size: 12px;
@@ -24,4 +20,8 @@
 .post-btn-cls {
     background-color: mat.get-color-from-palette($posterr-palette-primary, 100);
     color: mat.get-contrast-color-from-palette($posterr-palette-primary, 100);
+}
+
+.form-field-post ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: unset;
 }
