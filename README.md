@@ -69,6 +69,7 @@ Components such as 'All/Following' toogle in the mobile version were positioned 
 
 Scaling the application, features like color theme, internationalization (i18n) would be essential. Users often switch between dark and light theme. The application styling css is prepared to the theming change and internationalization, but some places dates string has to be checked, and colors text constrating with background as well.
 An improvement related to the posts could be a type of timer implementation. This timer would update how long was posted, even with the user not interacting with the application.  
+The application is responsive to web and mobile browsers. So, for mobile device with larger screens, such as tables, the components could be refactored to use better the large screens.
 
 Another component that should have been implemented is a scroll pagination. When the user scrolling down, the posts must be requested from the API. If there are too many posts loaded, the ones furthest from the scroll position should be destroyed. This is a way to prevent the frontend from being overloaded with elements and the page stop to work. This would be the first thing that would fail with many posts. The application is currently requesting and loading all posts on the screen.
 
@@ -78,7 +79,7 @@ For the front-end application, other types of technology would not be necessary 
 
 ## Application notes
 
-By default, the application will initalize with a mocked data. In the aplpcation left menu there are two buttons to the management of this stored data.
+By default, the application will initalize with a mocked data. In the application left menu there are two buttons to the management of this stored data.
 The first one will clean the data and initalize with the mock data. The second will clean all the locale storage, inserting only the default user. The default user is placed in the file:
 
 ```strider-posterr-app/src/app/common/services/auth/auth.service.ts```
