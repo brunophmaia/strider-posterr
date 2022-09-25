@@ -23,7 +23,7 @@ export class UserProfileModalComponent implements OnDestroy {
   userInfo: UserInfo;
   username: string;
   formattedUsername: string;
-  joinedDate: string;
+  joinedDate?: string;
   followingInfo: boolean;
   posts: Array<Post>;
   postWriteEnabled: boolean = false;
@@ -53,7 +53,7 @@ export class UserProfileModalComponent implements OnDestroy {
         this.userInfo = userInfo;
         this.username = userInfo.username;
         this.formattedUsername = insertAtUsername(userInfo.username);
-        this.joinedDate = getFullDate(userInfo.joinedDate, true);
+        this.joinedDate = userInfo.joinedDate ? getFullDate(userInfo.joinedDate, true) : undefined;
       })
     );
   }

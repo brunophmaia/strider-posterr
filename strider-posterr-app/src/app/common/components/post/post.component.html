@@ -16,7 +16,11 @@
     </div>
     <div *ngIf="post.repost" class="p-t-16">
         <mat-card class="mat-elevation-z6 card-repost-bkg">
-            <posterr-post [post]="post.repost" [repostAuthor]="repostAuthor" [showActions]="isRepost" [enabledClickUser]="enabledClickUser"></posterr-post>
+            <posterr-post [post]="post.repost"
+                          [repostAuthor]="repostAuthor"
+                          [showActions]="isRepost"
+                          [enabledClickUser]="enabledClickUser"
+                          (eventReposted)="eventReposted.emit()"></posterr-post>
         </mat-card>
     </div>
     <div *ngIf="!isRepost && showActions" class="flex p-t-24">

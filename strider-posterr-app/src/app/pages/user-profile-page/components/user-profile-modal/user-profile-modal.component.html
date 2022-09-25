@@ -12,7 +12,7 @@
                 <div class="p-l-16 vertical-center">
                     <div>
                         <div [ngClass]="{'fs-username': !(deviceService.isMobile$ | async), 'p-b-4': true}">{{ formattedUsername }}</div>
-                        <div class="nowrap">Joined date: {{ joinedDate }}</div>
+                        <div *ngIf="joinedDate" class="nowrap">Joined date: {{ joinedDate }}</div>
                     </div>
                 </div>
             </div>

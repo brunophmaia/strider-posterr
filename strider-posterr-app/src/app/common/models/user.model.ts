@@ -1,4 +1,4 @@
 export class User {
     username: string;
-    joinedDate: Date;
+    joinedDate?: Date;
 }

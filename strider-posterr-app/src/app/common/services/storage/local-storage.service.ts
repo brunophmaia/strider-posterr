@@ -69,6 +69,8 @@ export class LocalStorageService {
     posts.push(post);
     this.storePosts(posts);
 
+    this.checkUserOnInsertPost(post.author);
+
     return of(true);
   }
 
@@ -105,8 +107,35 @@ export class LocalStorageService {
       followersCount: followingUsers.filter(fu => fu.userFollowing == username).length,
       followingCount: followingUsers.filter(fu => fu.username == username).length,
       username: username,
-      joinedDate: new Date(user?.joinedDate)
+      joinedDate: user?.joinedDate ? new Date(user.joinedDate) : undefined
     });
+  }
+
+  insertDefaultUser(user: User) {
+    const users = this.getUsersFromStorage();
+    const userFound = users.find(u => u.username == user.username);
+
+    if(userFound) {
+      userFound.joinedDate = user.joinedDate
+    } else {
+      users.push(user);
+    }
+
+    this.storeUsers(users); 
+  }
+
+  private checkUserOnInsertPost(username: string){
+    const users = this.getUsersFromStorage();
+    const userExists = users.some(u => u.username == username);
+
+    if(!userExists) {
+      users.push({
+        username,
+        joinedDate: new Date()
+      });
+
+      this.storeUsers(users);
+    }
   }
 
   private getCountDailyPostUser(posts: Array<Post>, username: string): number {
@@ -125,6 +154,10 @@ export class LocalStorageService {
 
   private storeUserFollowing(usersFollowing: Array<UserFollowing>){
     localStorage.setItem(this.keyFollowingUsers, JSON.stringify(usersFollowing))
+  }
+
+  private storeUsers(users: Array<User>){
+    localStorage.setItem(this.keyUsers, JSON.stringify(users))
   }
 
   private getPostsFromStorage(): Array<Post> {
