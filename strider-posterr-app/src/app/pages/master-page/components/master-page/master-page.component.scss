@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/styles.scss";
 
 .mat-toolbar {
@@ -35,4 +36,13 @@
 
 .username-fs {
     font-size: 14px;
+}
+
+.w-80 {
+    width: 80%;
+}
+
+.cls-btn-data {
+    background-color: mat.get-color-from-palette($posterr-palette-primary, 100);
+    color: mat.get-contrast-color-from-palette($posterr-palette-primary, 100);
 }

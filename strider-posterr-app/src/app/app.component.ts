@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MockUpDataService } from './common/services/mock/mock-up-data.service';
 import { RouteService } from './common/services/route/route.service';
 
 @Component({
@@ -7,6 +8,7 @@ import { RouteService } from './common/services/route/route.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(public routeService: RouteService) {
+  constructor(public routeService: RouteService,
+              public mockUpDataService: MockUpDataService) {
   }
 }

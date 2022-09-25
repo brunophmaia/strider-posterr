@@ -21,6 +21,7 @@ export class PostComponent implements OnInit, OnDestroy {
   @Input() showActions: boolean = true;
   @Input() enabledClickUser: boolean = true;
   @Input() repostAuthor: string;
+  @Input() userProfile: boolean = false;
 
   @Output() eventReposted: EventEmitter<any> = new EventEmitter();
   
@@ -51,7 +52,11 @@ export class PostComponent implements OnInit, OnDestroy {
 
   openUser(){
     if(this.enabledClickUser) {
-      this.router.navigate([`${userProfilePath}/${this.post.author}`]);
+      this.router.navigate([`/${userProfilePath}/${this.post.author}`]).then(() => {
+        if(this.userProfile) {
+          window.location.reload();
+        }
+      });
     }
   }
 

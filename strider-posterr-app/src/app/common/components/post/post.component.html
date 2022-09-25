@@ -17,6 +17,7 @@
     <div *ngIf="post.repost" class="p-t-16">
         <mat-card class="mat-elevation-z6 card-repost-bkg">
             <posterr-post [post]="post.repost"
+                          [userProfile]="userProfile"
                           [repostAuthor]="repostAuthor"
                           [showActions]="isRepost"
                           [enabledClickUser]="enabledClickUser"

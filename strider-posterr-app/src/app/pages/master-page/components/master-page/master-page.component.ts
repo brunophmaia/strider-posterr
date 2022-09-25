@@ -2,6 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { DeviceService } from 'src/app/common/services/device/device.service';
+import { MockUpDataService } from 'src/app/common/services/mock/mock-up-data.service';
 import { insertAtUsername } from 'src/app/common/util/common.util';
 import { ScrollContentService } from '../../services/scroll-content.service';
 
@@ -16,6 +17,7 @@ export class MasterPageComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
               private scrollContentService: ScrollContentService,
+              private mockUpDataService: MockUpDataService,
               public deviceService: DeviceService) { }
 
   username: string;
@@ -43,6 +45,20 @@ export class MasterPageComponent implements OnInit, OnDestroy {
         this.username = insertAtUsername(loggedUser.username);
       })
     );
+  }
+
+  cleanAndMockData(){
+    this.mockUpDataService.cleanAndMockData();
+    this.navigateHome();
+  }
+
+  cleanData(){
+    this.mockUpDataService.cleanData();
+    this.navigateHome();
+  }
+
+  navigateHome(){
+    window.location.reload();
   }
 
   ngOnDestroy(){

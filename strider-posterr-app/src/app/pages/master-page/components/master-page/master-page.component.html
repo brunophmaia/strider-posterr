@@ -18,6 +18,19 @@
             <mat-icon class="p-r-8"> account_circle </mat-icon>
             {{ username }}
         </div>
+        <div class="p-t-40 p-b-16" i18n="@@data-settings-title">
+            Data settings
+        </div>
+        <div class="w-100 p-t-16 horizontal-center">
+            <div class="w-80">
+                <div class="p-b-16">
+                    <button (click)="cleanAndMockData()" class="w-100 cls-btn-data" mat-raised-button>Delete and mock data up</button>
+                </div>
+                <div>
+                    <button (click)="cleanData()" class="w-100 cls-btn-data" mat-raised-button>Delete stored data</button>
+                </div>
+            </div>
+        </div>
     </mat-sidenav>
     <mat-sidenav-content #scrollContent>
         <router-outlet></router-outlet>

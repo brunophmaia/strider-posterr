@@ -124,6 +124,18 @@ export class LocalStorageService {
     this.storeUsers(users); 
   }
 
+  checkMockData(users: Array<User>, usersFollowing: Array<UserFollowing>, posts: Array<Post>) {
+    if(!localStorage.getItem(this.keyFollowingUsers) && !localStorage.getItem(this.keyPosts)) {
+      this.mockData(users, usersFollowing, posts);
+    }
+  }
+
+  mockData(users: Array<User>, usersFollowing: Array<UserFollowing>, posts: Array<Post>) {
+    this.storeUsers(users);
+    this.storeUserFollowing(usersFollowing);
+    this.storePosts(posts);
+  }
+
   private checkUserOnInsertPost(username: string){
     const users = this.getUsersFromStorage();
     const userExists = users.some(u => u.username == username);

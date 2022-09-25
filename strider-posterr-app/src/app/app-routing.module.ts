@@ -26,7 +26,7 @@ const routes: Routes = [
         path: userProfilePath,
         children: [
           {
-            path: `:${usernameParam}`, component: UserProfileComponent,
+            path: `:${usernameParam}`, component: UserProfileComponent, pathMatch: "full",
           }
         ]
       },
