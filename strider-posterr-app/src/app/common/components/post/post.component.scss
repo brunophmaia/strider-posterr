@@ -18,6 +18,10 @@
     color: $link-text;
 }
 
+.color-icon {
+    color: mat.get-color-from-palette($posterr-palette-primary, 75);
+}
+
 ::ng-deep .profile-repost {
     max-width: unset !important;
 }

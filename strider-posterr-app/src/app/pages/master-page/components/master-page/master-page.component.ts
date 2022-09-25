@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { DeviceService } from 'src/app/common/services/device/device.service';
 import { insertAtUsername } from 'src/app/common/util/common.util';
+import { ScrollContentService } from '../../services/scroll-content.service';
 
 @Component({
   selector: 'posterr-master-page',
@@ -11,7 +12,10 @@ import { insertAtUsername } from 'src/app/common/util/common.util';
 })
 export class MasterPageComponent implements OnInit, OnDestroy {
 
+  @ViewChild('scrollContent', { read: ElementRef }) public scrollContent: ElementRef<any>;
+
   constructor(private authService: AuthService,
+              private scrollContentService: ScrollContentService,
               public deviceService: DeviceService) { }
 
   username: string;
@@ -20,6 +24,17 @@ export class MasterPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(){
     this.initLoggedUser();
+    this.initScrollTop();
+  }
+
+  initScrollTop(){
+    this.subs.push(
+      this.scrollContentService.scrollTop$.subscribe(() => {
+        if(this.scrollContent?.nativeElement) {
+          this.scrollContent.nativeElement.scrollTop = 0;
+        }
+      })
+    );
   }
 
   initLoggedUser(){

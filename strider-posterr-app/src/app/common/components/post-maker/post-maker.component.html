@@ -7,6 +7,6 @@
     </div>
     <ng-content></ng-content>
     <div class="w-100 horizontal-end">
-        <button (click)="createPost()" [disabled]="form.invalid && !isRepost" class="post-btn-cls" mat-raised-button>{{ isRepost ? (form.value.length ? 'QUOTE POST' : 'REPOST') : 'POST' }} </button>
+        <button (click)="createPost()" [disabled]="form.invalid" class="post-btn-cls" mat-raised-button>{{ isRepost ? 'QUOTE POST' : 'POST' }} </button>
     </div>
 </div>

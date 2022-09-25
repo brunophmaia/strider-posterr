@@ -7,6 +7,7 @@ import { Post } from 'src/app/common/models/post.model';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { DeviceService } from 'src/app/common/services/device/device.service';
 import { allPath, followingPath } from 'src/app/common/util/common.util';
+import { ScrollContentService } from 'src/app/pages/master-page/services/scroll-content.service';
 import { HomePageStateService, PostFilterType } from '../../state/home-page-state.service';
 
 @Component({
@@ -25,6 +26,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   constructor(public deviceService: DeviceService,
               public homepageState: HomePageStateService,
               public authService: AuthService,
+              private scrollContentService: ScrollContentService,
               private router: Router,
               private snackBar: MatSnackBar){
   }
@@ -37,10 +39,12 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   onChangeToggle(valueChange: MatButtonToggleChange){
     this.router.navigate([valueChange.value == PostFilterType.ALL ? allPath : followingPath]);
+    this.scrollContentService.scrollTop();
   }
 
   reposted(){
     this.homepageState.reloadPosts();
+    this.scrollContentService.scrollTop();
   }
 
   createPost(post: Post){
@@ -54,6 +58,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
             duration: 5000
           });
           this.eventCleanPost.next();
+          this.scrollContentService.scrollTop();
         },
         error: (err => {
           this.snackBar.open(err, "X", {

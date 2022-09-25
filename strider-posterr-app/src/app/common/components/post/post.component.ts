@@ -18,7 +18,7 @@ import { RepostComponent, RepostModel } from '../repost/repost.component';
 export class PostComponent implements OnInit, OnDestroy {
 
   @Input() post: Post
-  @Input() isRepost: boolean = false;
+  @Input() showActions: boolean = true;
   @Input() enabledClickUser: boolean = true;
   @Input() repostAuthor: string;
 
@@ -30,6 +30,7 @@ export class PostComponent implements OnInit, OnDestroy {
   author: string;
   date: string;
   subRepost: Subscription;
+  isRepost: boolean;
   subs: Array<Subscription> = [];
 
   constructor(private router: Router,
@@ -41,6 +42,11 @@ export class PostComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.setAuthor();
     this.setDate();
+    this.checkIsRepost();
+  }
+
+  checkIsRepost(){
+    this.isRepost = !this.post.text;
   }
 
   openUser(){
@@ -50,6 +56,13 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   repost(){
+    let post = new Post();
+    post.author = this.repostAuthor;
+    post.idRepost = this.post.id;
+    this.saveRepost(post, "Reposted");
+  }
+
+  quotepost(){
     const subMobile = this.deviceService.isMobile$.subscribe(isMobile => {
       const dialog  = this.dialog.open(RepostComponent, {
         width: isMobile ? "95%" : "60%",
@@ -75,16 +88,25 @@ export class PostComponent implements OnInit, OnDestroy {
     }
 
     this.subRepost = this.repost$.subscribe(post => {
+      this.saveRepost(post, "Quote reposted").then(() => {
+        dialog.close();
+      });
+    });
+    this.subs.push(this.subRepost);
+  }
+
+  saveRepost(post: Post, messageCreated: string): Promise<void> {
+    return new Promise((resolve) => {
       this.subs.push(
         this.postRestService.post(post).subscribe({
           next: () => {
-            this.snackBar.open($localize`${"Post created successfully!"}`, "X", {
+            this.snackBar.open($localize`${messageCreated}${" successfully!"}`, "X", {
               panelClass: "success-post",
               verticalPosition: "top",
               duration: 5000
             });
-            dialog.close();
             this.eventReposted.emit();
+            resolve();
           },
           error: (err => {
             this.snackBar.open(err, "X", {
@@ -95,8 +117,6 @@ export class PostComponent implements OnInit, OnDestroy {
         })
       );
     });
-
-    this.subs.push(this.subRepost);
   }
 
   private setAuthor(){

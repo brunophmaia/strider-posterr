@@ -1,62 +1,64 @@
-<div class="bkg-header sticky-top p-t-24">
-    <div class="close-btn">
-        <button (click)="close()"mat-icon-button>
-            <mat-icon> close </mat-icon>
-        </button>
-    </div>
-    <div [ngClass]="{flex: !(deviceService.isMobile$ | async)}">
-        <div class="flex">
-            <div [ngClass]="{'user-circle' : true,  'horizontal-center': true, 'vertical-center': true,
-                            'user-circle-w': !(deviceService.isMobile$ | async), 'user-circle-m': (deviceService.isMobile$ | async)}">{{ username[0].toUpperCase() }}</div>
-            <div class="p-l-16 vertical-center">
-                <div>
-                    <div [ngClass]="{'fs-username': !(deviceService.isMobile$ | async), 'p-b-4': true}">{{ formattedUsername }}</div>
-                    <div class="nowrap">Joined date: {{ joinedDate }}</div>
-                </div>
-            </div>
+<div #modalUserProfile>
+    <div class="bkg-header sticky-top p-t-24">
+        <div class="close-btn">
+            <button (click)="close()"mat-icon-button>
+                <mat-icon> close </mat-icon>
+            </button>
         </div>
-        <div class="w-100 horizontal-center">
-            <div [ngClass]="{'p-t-16': (deviceService.isMobile$ | async), flex: true, 'w-60': !(deviceService.isMobile$ | async), 'w-100': (deviceService.isMobile$ | async), 'vertical-center': true}">
-                <div class="w-100 horizontal-center">
+        <div [ngClass]="{flex: !(deviceService.isMobile$ | async)}">
+            <div class="flex">
+                <div [ngClass]="{'user-circle' : true,  'horizontal-center': true, 'vertical-center': true,
+                                'user-circle-w': !(deviceService.isMobile$ | async), 'user-circle-m': (deviceService.isMobile$ | async)}">{{ username[0].toUpperCase() }}</div>
+                <div class="p-l-16 vertical-center">
                     <div>
-                        <div [ngClass]="{'text-center': true, 'number-cls-m': (deviceService.isMobile$ | async), 'number-cls-w': !(deviceService.isMobile$ | async)}">{{ userInfo?.followersCount}}</div>
-                        <div class="text-center">Followers</div>
-                    </div>
-                </div>
-                <div class="w-100 horizontal-center">
-                    <div>
-                        <div [ngClass]="{'text-center': true, 'number-cls-m': (deviceService.isMobile$ | async), 'number-cls-w': !(deviceService.isMobile$ | async)}">{{ userInfo?.followingCount}}</div>
-                        <div class="text-center">Following</div>
-                    </div>
-                </div>
-                <div class="w-100 horizontal-center">
-                    <div>
-                        <div [ngClass]="{'text-center': true, 'number-cls-m': (deviceService.isMobile$ | async), 'number-cls-w': !(deviceService.isMobile$ | async)}">{{ userInfo?.postCount}}</div>
-                        <div class="text-center">Posts</div>
+                        <div [ngClass]="{'fs-username': !(deviceService.isMobile$ | async), 'p-b-4': true}">{{ formattedUsername }}</div>
+                        <div class="nowrap">Joined date: {{ joinedDate }}</div>
                     </div>
                 </div>
             </div>
+            <div class="w-100 horizontal-center">
+                <div [ngClass]="{'p-t-16': (deviceService.isMobile$ | async), flex: true, 'w-60': !(deviceService.isMobile$ | async), 'w-100': (deviceService.isMobile$ | async), 'vertical-center': true}">
+                    <div class="w-100 horizontal-center">
+                        <div>
+                            <div [ngClass]="{'text-center': true, 'number-cls-m': (deviceService.isMobile$ | async), 'number-cls-w': !(deviceService.isMobile$ | async)}">{{ userInfo?.followersCount}}</div>
+                            <div class="text-center">Followers</div>
+                        </div>
+                    </div>
+                    <div class="w-100 horizontal-center">
+                        <div>
+                            <div [ngClass]="{'text-center': true, 'number-cls-m': (deviceService.isMobile$ | async), 'number-cls-w': !(deviceService.isMobile$ | async)}">{{ userInfo?.followingCount}}</div>
+                            <div class="text-center">Following</div>
+                        </div>
+                    </div>
+                    <div class="w-100 horizontal-center">
+                        <div>
+                            <div [ngClass]="{'text-center': true, 'number-cls-m': (deviceService.isMobile$ | async), 'number-cls-w': !(deviceService.isMobile$ | async)}">{{ userInfo?.postCount}}</div>
+                            <div class="text-center">Posts</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [ngClass]="{'p-t-32': !(deviceService.isMobile$ | async), 'p-t-16': (deviceService.isMobile$ | async), 'w-100': true, 'flex': true, 'horizontal-center': (deviceService.isMobile$ | async)}">
+            <div *ngIf="followingInfo != undefined" [ngClass]="{'p-r-4': true, 'w-100': (deviceService.isMobile$ | async)}">
+                <button (click)="followAction()" mat-raised-button class="w-100 follow-btn-cls">{{ followingInfo ? 'UNFOLLOW' : 'FOLLOW' }} </button></div>
+            <div [ngClass]="{'p-l-4': true, 'w-100': (deviceService.isMobile$ | async)}">
+                <button mat-raised-button (click)="postWriteEnabled = !postWriteEnabled" class="w-100 post-btn-cls">{{ postWriteEnabled ? 'CANCEL POST' : 'MAKE A POST' }}</button></div>
+        </div>
+        <div class="horizontal-center p-t-16">
+            <div *ngIf="postWriteEnabled" [ngClass]="{'width-post-w': !(deviceService.isMobile$ | async), 'w-100': (deviceService.isMobile$ | async)}"> 
+                <posterr-post-maker [eventCleanPost]="eventCleanPost.asObservable()"
+                                    (createPostEvent)="createPost($event)"></posterr-post-maker>
+            </div>
         </div>
     </div>
-    <div [ngClass]="{'p-t-32': !(deviceService.isMobile$ | async), 'p-t-16': (deviceService.isMobile$ | async), 'w-100': true, 'flex': true, 'horizontal-center': (deviceService.isMobile$ | async)}">
-        <div *ngIf="followingInfo != undefined" [ngClass]="{'p-r-4': true, 'w-100': (deviceService.isMobile$ | async)}">
-            <button (click)="followAction()" mat-raised-button class="w-100 follow-btn-cls">{{ followingInfo ? 'UNFOLLOW' : 'FOLLOW' }} </button></div>
-        <div [ngClass]="{'p-l-4': true, 'w-100': (deviceService.isMobile$ | async)}">
-            <button mat-raised-button (click)="postWriteEnabled = !postWriteEnabled" class="w-100 post-btn-cls">{{ postWriteEnabled ? 'CANCEL POST' : 'MAKE A POST' }}</button></div>
-    </div>
-    <div class="horizontal-center p-t-16">
-        <div *ngIf="postWriteEnabled" [ngClass]="{'width-post-w': !(deviceService.isMobile$ | async), 'w-100': (deviceService.isMobile$ | async)}"> 
-            <posterr-post-maker [eventCleanPost]="eventCleanPost.asObservable()"
-                                (createPostEvent)="createPost($event)"></posterr-post-maker>
-        </div>
-    </div>
-</div>
 
-<div class="w-100 horizontal-center">
-    <div [ngClass]="{'width-post-w': !(deviceService.isMobile$ | async), 'w-100': (deviceService.isMobile$ | async)}">
-        <div class="w-100">
-            <div *ngFor="let post of posts" [ngClass]="{'post-border': true,  'p-t-32': true, 'p-b-32': true, 'p-l-16': !(deviceService.isMobile$ | async), 'p-r-16': !(deviceService.isMobile$ | async)}"> 
-                <posterr-post [repostAuthor]="username" [enabledClickUser]="false" [post]="post" (eventReposted)="reposted()"></posterr-post>
+    <div class="w-100 horizontal-center">
+        <div [ngClass]="{'width-post-w': !(deviceService.isMobile$ | async), 'w-100': (deviceService.isMobile$ | async)}">
+            <div class="w-100">
+                <div *ngFor="let post of posts" [ngClass]="{'post-border': true,  'p-t-32': true, 'p-b-32': true, 'p-l-16': !(deviceService.isMobile$ | async), 'p-r-16': !(deviceService.isMobile$ | async)}"> 
+                    <posterr-post [repostAuthor]="username" [enabledClickUser]="false" [post]="post" (eventReposted)="reposted()"></posterr-post>
+                </div>
             </div>
         </div>
     </div>

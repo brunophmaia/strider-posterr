@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject, Subscription } from 'rxjs';
@@ -17,6 +17,8 @@ import { getFullDate } from 'src/app/common/util/date.util';
   styleUrls: ['./user-profile-modal.component.scss']
 })
 export class UserProfileModalComponent implements OnDestroy {
+
+  @ViewChild('modalUserProfile', { read: ElementRef }) public modalUserProfile: ElementRef<any>;
 
   userInfo: UserInfo;
   username: string;
@@ -76,6 +78,7 @@ export class UserProfileModalComponent implements OnDestroy {
 
   reposted(){
     this.loadData();
+    this.scrollTop();
   }
 
   followAction(){
@@ -110,6 +113,7 @@ export class UserProfileModalComponent implements OnDestroy {
           this.eventCleanPost.next();
           this.loadData();
           this.postWriteEnabled = false;
+          this.scrollTop();
         },
         error: (err => {
           this.snackBar.open(err, "X", {
@@ -119,6 +123,12 @@ export class UserProfileModalComponent implements OnDestroy {
         })
       })
     )
+  }
+
+  scrollTop(){
+    if(this.modalUserProfile?.nativeElement?.parentElement?.parentElement) {
+      this.modalUserProfile.nativeElement.parentElement.parentElement.scrollTop = 0;
+    }
   }
 
   close(){

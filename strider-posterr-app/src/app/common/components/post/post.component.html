@@ -10,18 +10,21 @@
             <div class="p-r-8 p-l-8">·</div>
             <div>{{ date }}</div>
         </div>
-        <div *ngIf="!isRepost">
-            <button (click)="repost()" mat-icon-button>
-                <mat-icon> share </mat-icon>
-            </button>
-        </div>
     </div>
-    <div class="p-t-16 p-l-4 p-r-4">
+    <div *ngIf="post.text" class="p-t-16 p-l-4 p-r-4">
         {{ post.text }}
     </div>
-    <div *ngIf="post.repost" class="p-t-16 p-r-16 p-l-16">
+    <div *ngIf="post.repost" class="p-t-16">
         <mat-card class="mat-elevation-z6 card-repost-bkg">
-            <posterr-post [post]="post.repost" [enabledClickUser]="enabledClickUser" [isRepost]="true"></posterr-post>
+            <posterr-post [post]="post.repost" [repostAuthor]="repostAuthor" [showActions]="isRepost" [enabledClickUser]="enabledClickUser"></posterr-post>
         </mat-card>
+    </div>
+    <div *ngIf="!isRepost && showActions" class="flex p-t-24">
+        <div> 
+            <button (click)="repost()" class="color-icon" mat-icon-button><mat-icon> screen_rotation_alt </mat-icon></button>
+        </div>
+        <div class="p-l-16"> 
+            <button (click)="quotepost()" class="color-icon" mat-icon-button><mat-icon> create </mat-icon></button>
+        </div>
     </div>
 </div>

@@ -4,6 +4,7 @@ import { Post } from '../../models/post.model';
 import { UserFollowing } from '../../models/user-following.model';
 import { UserInfo } from '../../models/user-info.model';
 import { User } from '../../models/user.model';
+import { copy } from '../../util/common.util';
 
 @Injectable({
   providedIn: 'root'
@@ -18,25 +19,34 @@ export class LocalStorageService {
 
   getPosts(username?: string): Observable<Array<Post>> {
     let posts = this.getPostsFromStorage();
+    let filteredPosts: Array<Post> = [];
 
     if(username) {
       const followingUsers = this.getFollowingUsers(username);
-      posts = posts.filter(post => followingUsers.some(fu => fu == post.author));
+      filteredPosts = posts.filter(post => followingUsers.some(fu => fu == post.author));
+    } else {
+      filteredPosts = posts;
     }
 
-    posts.sort((a, b) => new Date(a.datetime) < new Date(b.datetime) ? 1 : -1);
-    return of(posts);
+    this.fillReposts(filteredPosts, posts);
+
+    filteredPosts.sort((a, b) => new Date(a.datetime) < new Date(b.datetime) ? 1 : -1);
+    return of(filteredPosts);
   }
 
   getPostsByUser(username?: string): Observable<Array<Post>> {
     let posts = this.getPostsFromStorage();
-    const postsFiltered = posts.filter(post => username == post.author);
-    postsFiltered.sort((a, b) => new Date(a.datetime) < new Date(b.datetime) ? 1 : -1);
-    return of(postsFiltered);
+    const filteredPosts = posts.filter(post => username == post.author);
+    this.fillReposts(filteredPosts, posts);
+    filteredPosts.sort((a, b) => new Date(a.datetime) < new Date(b.datetime) ? 1 : -1);
+    return of(filteredPosts);
   }
 
-  getPost(postId: string) {
-    return of(this.getPostsFromStorage().find(p => p.id == postId));
+  getPost(postId: string): Observable<Post> {
+    const posts = this.getPostsFromStorage();
+    const post = posts.find(p => p.id == postId) as Post;
+    this.fillRepost(post, posts);
+    return of(post);
   }
 
   savePost(post: Post): Observable<any> {
@@ -48,7 +58,7 @@ export class LocalStorageService {
     if(this.getCountDailyPostUser(posts, post.author) >= this.postsDailyLimit) {
 
       const errorWithTimestamp$ = throwError(() => {
-        const error: any = new Error($localize`${"User reached 5 posts daily limit!"}`);
+        const error: any = new Error($localize`${"User reached "}${this.postsDailyLimit}${" posts daily limit!"}`);
         error.timestamp = Date.now();
         return error;
       });
@@ -150,5 +160,17 @@ export class LocalStorageService {
   private getFollowingUsers(username: string): Array<string> {
     const followingUsers = this.getFollowingFromStorage();
     return followingUsers.filter(fu => fu.username == username).map(fu => fu.userFollowing);
+  }
+
+  private fillReposts(filteredPost: Array<Post>, allPosts: Array<Post>){
+    allPosts = copy(allPosts);
+    filteredPost.forEach(post => {
+      this.fillRepost(post, allPosts);
+    });
+  }
+
+  private fillRepost(post: Post, allPosts: Array<Post>){
+    allPosts = copy(allPosts);
+    post.repost = allPosts.find(repost => repost.id == post.idRepost);
   }
 }
