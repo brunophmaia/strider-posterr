@@ -1,27 +1,23 @@
-# StriderPosterrApp
+It's necessary to install Node.js /npm.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
+https://nodejs.org/en/download/package-manager/
 
-## Development server
+Inside of the strider-posterr-app folder run the commands bellow:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Install angular CLI:
 
-## Code scaffolding
+```npm install -g @angular/cli```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Allow the execution of PowerShell scripts on Windows:
 
-## Build
+```Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Install dependencies:
 
-## Running unit tests
+```npm install```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run project:
 
-## Running end-to-end tests
+```ng s```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+By default the application will start in http://localhost:4200. If necessary the option ```--port <portNumber>``` can be added in the ```ng s``` command.
