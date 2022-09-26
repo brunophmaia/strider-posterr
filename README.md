@@ -84,4 +84,12 @@ The first one will clean the data and initalize with the mock data. The second w
 
 ```strider-posterr-app/src/app/common/services/auth/auth.service.ts```
 
-Changing the username the application logged user will be updated.
+Changing the loggedUser attribute the application logged user will be updated.
+
+In the mock data there are the relationships:
+
+- 'brunophmaia' follows the users: 'posterr', 'samuel' and 'dudatobias'
+
+- 'posterr' follows the users: 'brunophmaia'
+
+- 'dudatobias' follows the users: 'samuel'

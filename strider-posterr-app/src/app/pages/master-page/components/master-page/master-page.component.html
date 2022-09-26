@@ -3,7 +3,14 @@
         <mat-icon> {{ menuOpened ? 'chevron_left' : 'menu' }} </mat-icon>
       </button>
     <span class="p-l-8">POSTERR</span>
-    <div *ngIf="!(deviceService.isMobile$ | async)" class="w-100 horizontal-end username-fs">{{ username }}</div>
+    <div class="w-100 horizontal-end vertical-center">
+        <div class="p-r-8">
+            <button (click)="search()"mat-icon-button>
+                <mat-icon> search </mat-icon>
+            </button>
+        </div>
+        <div *ngIf="!(deviceService.isMobile$ | async)" class="username-fs">{{ username }}</div>
+    </div>
 </mat-toolbar>
 
 <mat-sidenav-container [ngClass]="{'sidenav-height': !(deviceService.isMobile$ | async), 'sidenav-height-mobile': (deviceService.isMobile$ | async)}">

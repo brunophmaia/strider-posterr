@@ -1,0 +1,15 @@
+<div class="horizontal-end">
+    <button (click)="close()"mat-icon-button>
+        <mat-icon> close </mat-icon>
+    </button>
+</div>
+
+<mat-form-field class="w-100" appearance="outline">
+    <mat-label>Search</mat-label>
+    <input [formControl]="searchService.formSearch" matInput>
+</mat-form-field>
+
+<div class="horizontal-end">
+    <button class="btn-search" (click)="cancelSearch()" mat-raised-button> CLEAN SEARCH </button>
+    <button [disabled]="searchService.formSearch.invalid" class="btn-search m-l-16"(click)="search()" mat-raised-button> SEARCH </button>
+</div>

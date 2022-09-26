@@ -10,12 +10,12 @@ export class PostRestService {
 
   constructor(private storageService: LocalStorageService) {}
 
-  getAll(): Observable<Array<Post>>{
-    return this.storageService.getPosts();
+  getAll(search: string): Observable<Array<Post>>{
+    return this.storageService.getPosts(undefined ,search);
   }
 
-  getAllFollowing(username: string): Observable<Array<Post>> {
-    return this.storageService.getPosts(username);
+  getAllFollowing(username: string, search: string): Observable<Array<Post>> {
+    return this.storageService.getPosts(username, search);
   }
 
   get(postId: string): Observable<any> {

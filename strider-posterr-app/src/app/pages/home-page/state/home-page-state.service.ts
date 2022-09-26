@@ -4,6 +4,7 @@ import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
 import { Post } from 'src/app/common/models/post.model';
 import { PostRestService } from 'src/app/common/rest-services/post-rest-service';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
+import { SearchService } from 'src/app/common/services/search/search.service';
 
 export enum PostFilterType {
   ALL,
@@ -20,12 +21,15 @@ export class HomePageStateService implements OnDestroy {
 
   subs: Array<Subscription> = [];
   toggleAll: boolean = true;
+  search: string;
 
   formPostType: FormControl = new FormControl();
 
   constructor(private postRestService: PostRestService,
+              private searchService: SearchService,
               private authService: AuthService) { 
     this.initChangesPostType();
+    this.initChangeSearch();
   }
 
   setPostTypeFromPath(postType: PostFilterType, fromUserProfile: boolean = false){
@@ -56,7 +60,7 @@ export class HomePageStateService implements OnDestroy {
 
   loadAllPosts(){
     this.subs.push(
-      this.postRestService.getAll().subscribe(posts => {
+      this.postRestService.getAll(this.search).subscribe(posts => {
         this.subjectPosts.next(posts);
       })
     )
@@ -64,7 +68,7 @@ export class HomePageStateService implements OnDestroy {
 
   loadFollowingPosts(username: string) {
     this.subs.push(
-      this.postRestService.getAllFollowing(username).subscribe(posts => {
+      this.postRestService.getAllFollowing(username, this.search).subscribe(posts => {
         this.subjectPosts.next(posts);
       })
     )
@@ -76,6 +80,23 @@ export class HomePageStateService implements OnDestroy {
       this.loadPosts(this.formPostType.value);
       return p;
     }));
+  }
+
+  initChangeSearch(){
+    this.subs.push(
+      this.searchService.cleanSearch$.subscribe(() => {
+        this.search = "";
+        this.reloadPosts();
+      })
+    );
+
+
+    this.subs.push(
+      this.searchService.search$.subscribe(search => {
+        this.search = search;
+        this.reloadPosts();
+      })
+    );
   }
 
   ngOnDestroy() {

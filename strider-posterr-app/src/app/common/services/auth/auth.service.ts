@@ -8,13 +8,15 @@ import { LocalStorageService } from '../storage/local-storage.service';
 })
 export class AuthService {
 
+  loggedUser: string = "brunophmaia";
+
   private subjectLoggedUser: BehaviorSubject<User> = new BehaviorSubject<User>(new User());
   loggedUser$: Observable<User> = this.subjectLoggedUser.asObservable();
 
   constructor(private storageService: LocalStorageService){
     
     const user: User = {
-      username: "brunophmaia",
+      username: this.getAllowedUsername(this.loggedUser),
       joinedDate: new Date(2022, 8, 19)
     }
 
@@ -24,5 +26,9 @@ export class AuthService {
 
   getLoggedUsername(): string {
     return this.subjectLoggedUser.value.username;
+  }
+
+  getAllowedUsername(username: string): string {
+    return username.replace(/[^a-z0-9]/gi,'').substring(0, 14);
   }
 }

@@ -6,6 +6,11 @@ import { UserInfo } from '../../models/user-info.model';
 import { User } from '../../models/user.model';
 import { copy } from '../../util/common.util';
 
+export class PostRank {
+  post: Post;
+  countFound: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +22,7 @@ export class LocalStorageService {
   keyFollowingUsers = "followingUsers-posterr-strider";
   keyUsers = "users-posterr-strider";
 
-  getPosts(username?: string): Observable<Array<Post>> {
+  getPosts(username?: string, search?: string): Observable<Array<Post>> {
     let posts = this.getPostsFromStorage();
     let filteredPosts: Array<Post> = [];
 
@@ -29,8 +34,10 @@ export class LocalStorageService {
     }
 
     this.fillReposts(filteredPosts, posts);
-
     filteredPosts.sort((a, b) => new Date(a.datetime) < new Date(b.datetime) ? 1 : -1);
+
+    filteredPosts = this.filterPostsSearch(search as string, filteredPosts);
+
     return of(filteredPosts);
   }
 
@@ -134,6 +141,35 @@ export class LocalStorageService {
     this.storeUsers(users);
     this.storeUserFollowing(usersFollowing);
     this.storePosts(posts);
+  }
+
+  /**
+   * This search method will check if the posts contain each word in the search.
+   * Posts will be returned sorted by the number of words found.
+   */
+  private filterPostsSearch(search: string, filteredPosts: Array<Post>): Array<Post> {
+    if(!search) {
+      return filteredPosts;
+    }
+
+    const words = search.split(" ").filter(w => !!w).map(w => w.toLowerCase());
+    let postsRank: Array<PostRank> = [];
+
+    filteredPosts.forEach(post => {
+      if(post.text) {
+        const postLower = post.text.toLowerCase();
+        let countFound = 0;
+        words.forEach(word => countFound = postLower.includes(word) ? countFound + 1 : countFound);
+
+        if(countFound) {
+          postsRank.push({post, countFound})
+        }
+      }
+    });
+
+    postsRank.sort((a, b) => a.countFound < b.countFound ? 1 : -1)
+
+    return postsRank.map(pr => pr.post);
   }
 
   private checkUserOnInsertPost(username: string){

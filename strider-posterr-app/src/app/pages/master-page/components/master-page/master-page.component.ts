@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { DeviceService } from 'src/app/common/services/device/device.service';
 import { MockUpDataService } from 'src/app/common/services/mock/mock-up-data.service';
+import { SearchService } from 'src/app/common/services/search/search.service';
 import { insertAtUsername } from 'src/app/common/util/common.util';
 import { ScrollContentService } from '../../services/scroll-content.service';
 
@@ -17,6 +18,7 @@ export class MasterPageComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
               private scrollContentService: ScrollContentService,
+              private searchService: SearchService,
               private mockUpDataService: MockUpDataService,
               public deviceService: DeviceService) { }
 
@@ -55,6 +57,10 @@ export class MasterPageComponent implements OnInit, OnDestroy {
   cleanData(){
     this.mockUpDataService.cleanData();
     this.navigateHome();
+  }
+
+  search(){
+    this.searchService.open();
   }
 
   navigateHome(){

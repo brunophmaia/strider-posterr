@@ -11,6 +11,7 @@ import { UserProfileModalComponent } from './pages/user-profile-page/components/
 import { PostComponent } from './common/components/post/post.component';
 import { PostMakerComponent } from './common/components/post-maker/post-maker.component';
 import { RepostComponent } from './common/components/repost/repost.component';
+import { SearchComponent } from './common/components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { RepostComponent } from './common/components/repost/repost.component';
     UserProfileModalComponent,
     PostComponent,
     PostMakerComponent,
-    RepostComponent
+    RepostComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
