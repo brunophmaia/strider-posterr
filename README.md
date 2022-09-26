@@ -52,11 +52,13 @@ By default the application will start in http://localhost:4200. If necessary the
 #### Solution
 
 - Front-end
+
 On the homepage there will be a third button, beside to the Repost and Quote Post buttons. Clicking on the button will open an input for the reply. Even though replies are not displayed on the homepage, often users want to add a reply quickly and they don't want to go to the user profile page and find the post to reply. As Post shares the same component, the reply button will automatically be implemented on the homepage and user profile page.
 
 On the user profile page the component will be changed to tabs: the first tab will show only posts without replies; in the second tab there will be the posts with replies. By clicking on the post reply button, the input will open to insert the comment and the list of replies that the post has as well.
 
-- Database:
+- Database
+
 A new entity 'reply' will be created. Initially, the entity will basically have 4 attributes indicating the post, the reply's author, the date, and the content.
 
 - API:
